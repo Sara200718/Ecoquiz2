@@ -2,13 +2,12 @@ import flet as ft
 import time
 
 
-# Você deve ter as imagens correspondentes em assets/images/
 QUIZ_DATA = [
     {
         "phase": "Fase 1/6",
         "instruction": "Dica: A vida está tendo que começar do zero. O local é novo e estéril (rocha nua), por exemplo, após uma erupção vulcânica.",
         "question": "Pergunta: Este cenário é um exemplo de qual tipo de sucessão ecológica?",
-        "image_path": "assets/images/volcano_scene_1.jpg", 
+        "image_path": "1761173154761.jpg", 
         "options": [
             "Sucessão Primária",
             "Sucessão Secundária",
@@ -19,7 +18,7 @@ QUIZ_DATA = [
         "phase": "Fase 2/6",
         "instruction": "Dica: São os primeiros organismos a se estabelecerem na rocha nua, quebrando-a e formando o primeiro solo.",
         "question": "Pergunta: Qual grupo de organismos faz parte da primeira Comunidade Pioneira em uma Sucessão Primária?",
-        "image_path": "assets/images/lichen_scene_2.jpg",
+        "image_path": "1761173608756.jpg",
         "options": [
             "Árvores de grande porte e herbáceas",
             "Líquens e Musgos (Briófitas)",
@@ -30,7 +29,7 @@ QUIZ_DATA = [
         "phase": "Fase 3/6",
         "instruction": "Dica: Essas plantas têm raízes curtas e crescem em um solo ainda fino. Elas vêm depois dos líquens.",
         "question": "Pergunta: Após o estabelecimento dos líquens, o solo fino permite o surgimento de qual tipo de planta?",
-        "image_path": "assets/images/grass_scene_3.jpg",
+        "image_path": "1761173567448.jpg",
         "options": [
             "Gramíneas e Ervas Daninhas (Herbáceas)",
             "Grandes arbustos lenhosos",
@@ -41,7 +40,7 @@ QUIZ_DATA = [
         "phase": "Fase 4/6",
         "instruction": "Dica: O solo já está mais profundo e consegue reter mais água e nutrientes. A luz ainda é abundante.",
         "question": "Pergunta: Que tipo de organismos passa a dominar o ambiente após as gramíneas, competindo por espaço e água?",
-        "image_path": "assets/images/shrub_scene_4.jpg",
+        "image_path": "1761173490559.jpg",
         "options": [
             "Árvores de dossel",
             "Arbustos e pequenas árvores (Sementes trazidas pelo vento)",
@@ -52,7 +51,7 @@ QUIZ_DATA = [
         "phase": "Fase 5/6",
         "instruction": "Dica: A comunidade está ficando mais complexa e as espécies tolerantes à sombra começam a dominar.",
         "question": "Pergunta: Qual processo faz com que as espécies pioneiras sejam substituídas pelas arbustivas?",
-        "image_path": "assets/images/forest_growth_scene_5.jpg",
+        "image_path":"1761173097258.jpg",
         "options": [
             "Invasão (Arrival)",
             "Substituição ou Ecese (Successional Change)",
@@ -63,7 +62,7 @@ QUIZ_DATA = [
         "phase": "Fase 6/6",
         "instruction": "Dica: A comunidade alcançou um estado de relativa estabilidade, com alta biodiversidade e biomassa.",
         "question": "Pergunta: Como é chamada a última etapa da sucessão ecológica, onde o ecossistema está 'maduro'?",
-        "image_path": "assets/images/climax_scene_6.jpg",
+        "image_path": "1761173511887.jpg",
         "options": [
             "Comunidade Clímax",
             "Estágio Intermediário",
@@ -72,7 +71,6 @@ QUIZ_DATA = [
     },
 ]
 
-# --- 2. TELA DO QUIZ (Fase) - [A LÓGICA PERMANECE A MESMA] ---
 
 class QuizScreen(ft.View):
     def __init__(self, page: ft.Page, question_index: int):
@@ -85,30 +83,30 @@ class QuizScreen(ft.View):
         self.question_data = QUIZ_DATA[question_index]
         self.selected_option = ft.Text(value="", visible=False) 
         
-        # Cores
+        
         self.GREEN_MAIN = "#558B2F"
         self.YELLOW_ACCENT = "#FBC02D"
         
-        # Componentes do Quiz Screen (o corpo da tela de perguntas)
+        
         self.controls = [
             ft.Container(
                 expand=True,
                 content=ft.Stack(
                     controls=[
-                        # 1. Imagem de Fundo
+                        
                         ft.Image(
-                            src=self.question_data["image_path"],
+                            src=self.question_data["image_path":"1761173154761.jpg " ],
                             fit=ft.ImageFit.COVER,
                             expand=True,
                         ),
-                        # 2. Sobreposição para escurecer
+                       
                         ft.Container(bgcolor=ft.colors.BLACK54),
 
-                        # 3. Conteúdo (Topo, Dica, Card de Perguntas)
+                        
                         ft.Column(
                             controls=[
                                 self._build_top_header(),
-                                # Área da Dica
+                       
                                 ft.Container(
                                     content=ft.Text(self.question_data["instruction"], size=14, color=ft.colors.BLACK87),
                                     bgcolor=ft.colors.GREEN_50,
@@ -149,7 +147,7 @@ class QuizScreen(ft.View):
                         border=ft.border.all(3, self.GREEN_MAIN),
                         border_radius=20,
                     ),
-                    # Ícone de Dica
+                    
                     ft.Container(
                         content=ft.Icon(ft.icons.LIGHTBULB_OUTLINE, color=self.YELLOW_ACCENT, size=24),
                         padding=8,
@@ -164,7 +162,7 @@ class QuizScreen(ft.View):
     def check_answer(self, e):
         """Lógica para verificar a resposta e avançar."""
         if self.selected_option.value != "":
-             # Impede múltiplos cliques
+             
              return
         
         option = e.control.data
@@ -172,16 +170,16 @@ class QuizScreen(ft.View):
 
         is_correct = option == self.question_data["correct_answer"]
         
-        # Feedback visual imediato
+        
         e.control.bgcolor = ft.colors.GREEN_400 if is_correct else ft.colors.RED_400
         e.control.border = ft.border.all(4, ft.colors.GREEN_900 if is_correct else ft.colors.RED_900)
         
-        # Adiciona a pontuação à sessão
+        
         self.page.session.set("score", self.page.session.get("score", 0) + (1 if is_correct else 0))
         
         self.page.update()
         
-        # Feedback e Navegação
+        
         if is_correct:
             message = "CORRETO! Próxima fase em 2 segundos."
         else:
@@ -198,15 +196,15 @@ class QuizScreen(ft.View):
         time.sleep(2) 
         
         if self.question_index + 1 < len(QUIZ_DATA):
-            # Próxima fase
+            
             self.page.go(f"/quiz/{self.question_index + 1}")
         else:
-            # Fim do Quiz
+            
             self.page.go("/results")
 
 
     def _build_question_card(self):
-        # Cria os botões de opção
+        
         option_buttons = [
             ft.Container(
                 content=ft.Row(
@@ -244,7 +242,7 @@ class QuizScreen(ft.View):
         )
 
 
-# --- 3. TELA DE INTRODUÇÃO/MISSÃO - [MANTIDA A MESMA] ---
+
 
 def IntroScreen(page: ft.Page):
     return ft.View(
@@ -295,7 +293,7 @@ def IntroScreen(page: ft.Page):
         padding=0
     )
 
-# --- 4. TELA DE RESULTADOS (Simplificada) - [MANTIDA A MESMA] ---
+
 def ResultsScreen(page: ft.Page):
     score = page.session.get("score", 0)
     total = len(QUIZ_DATA)
@@ -320,7 +318,7 @@ def ResultsScreen(page: ft.Page):
     )
 
 
-# --- 5. FUNÇÃO PRINCIPAL DO FLET - [MANTIDA A MESMA] ---
+
 
 def main(page: ft.Page):
     page.title = "EcoQuiz: Missão de Sucessão Ecológica"
