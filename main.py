@@ -75,7 +75,7 @@ QUIZ_DATA = [
 class QuizScreen(ft.View):
     def __init__(self, page: ft.Page, question_index: int):
         super().__init__(
-            route=f"/quiz/{question_index}", # Garante a rota correta para o pop
+            route=f"/quiz/{question_index}", 
             padding=0
         )
         self.page = page
