@@ -128,7 +128,7 @@ class QuizScreen(ft.View):
         ]
 
     def _build_top_header(self):
-        # ... (Mantido o mesmo código do header)
+       
         return ft.Container(
             padding=ft.padding.only(left=20, right=20, top=10),
             content=ft.Row(
